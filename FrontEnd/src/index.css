@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.caveat-logo {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+body{
+  background-color: black;
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  background-color: #a21caf;
+}
+.logoCol {
+  color: blueviolet;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
