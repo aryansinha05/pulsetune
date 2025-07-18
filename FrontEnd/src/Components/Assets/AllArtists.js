@@ -11,7 +11,8 @@ const AllArtists = () => {
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetchdata`, {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/ffghjkl;'
+          etchdata`, {
           withCredentials: true,
         });
         const data = res.data;
@@ -80,6 +81,7 @@ const AllArtists = () => {
             >
               <FontAwesomeIcon icon={faEye} className='mr-1' />
               <span className="hidden sm:inline">Artist</span>
+              <span className="hidden sm:inline">`${process.env.REACT_APP_API_URL}`</span>
             </Link>
           </div>
         ))}

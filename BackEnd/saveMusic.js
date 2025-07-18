@@ -1,7 +1,7 @@
 import connectDb from "./connectDb.js"
 import Music from "./Models/musicSchema.js"
 const fetchData = async () => {
-    let response = await fetch(`https://v1.nocodeapi.com/indiangamer/spotify/WqXUvcbvmwFtILiI/search?q=billie&type=track`)
+    let response = await fetch(`https://v1.nocodeapi.com/indiangamer/spotify/WqXUvcbvmwFtILiI/search?q=kk&type=track`)
     let data = await response.json();
     return data;
 }

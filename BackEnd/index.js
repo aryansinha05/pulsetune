@@ -15,7 +15,6 @@ import MongoStore from "connect-mongo";
 config();
 const app = express();
 const port = process.env.PORT;
-console.log("MONGO_URI:", process.env.MONGO_URI);
 
 const sessionOptions = {
   secret: process.env.SESSION_CODE,
@@ -26,12 +25,12 @@ const sessionOptions = {
     ttl: 14 * 24 * 60 * 60,
     autoRemove: "native", 
   }),
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24 * 7, 
-    httpOnly: true,
-    secure: true,
-    sameSite: 'none',
-  },
+  // cookie: {
+  //   maxAge: 1000 * 60 * 60 * 24 * 7, 
+  //   httpOnly: true,
+  //   secure: true,
+  //   sameSite: 'none',
+  // },
 };
 
 const corsOptions = {

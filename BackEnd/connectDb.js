@@ -1,5 +1,8 @@
+
+import dotenv  from "dotenv";
 import mongoose from "mongoose";
 
+dotenv.config()
 export default async function connectDB() {
   mongoose
     .connect(process.env.MONGO_URI)
