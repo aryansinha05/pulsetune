@@ -55,7 +55,7 @@ const Home = ({
     <>
       {search ? (
         filteredMusic.length > 0 ? (
-          <div className="grid gap-3 grid-cols-1 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 w-full mt-5">
+          <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full mt-5">
             {filteredMusic.map((music) => (
               <div className="m-2" key={music._id}>
                 <Card
@@ -90,7 +90,7 @@ const Home = ({
           </div>
         )
       ) : (
-        <div className="grid gap-3 grid-cols-1 xl:grid-cols-6 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 w-full mt-5">
+        <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 w-full mt-5">
           {musics.map((music) => (
             <div className="m-2" key={music._id}>
               <Card

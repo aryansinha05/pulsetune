@@ -19,6 +19,7 @@ const Player = ({
   const [duration, setDuration] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
   const [queueOpen, setQueueOpen] = useState(false);
+  const queueRef = useRef(null);
   const audioRef = useRef(null);
 
   const handleClick = () => {
@@ -81,6 +82,18 @@ const Player = ({
     setCurrentMusic(newCurrentMusic);
     setPostQueue(newPostQueue);
   };
+
+  // Close queue when clicking outside
+  useEffect(() => {
+    if (!queueOpen) return;
+    const handleClickOutside = (event) => {
+      if (queueRef.current && !queueRef.current.contains(event.target)) {
+        setQueueOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [queueOpen]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -256,10 +269,16 @@ const Player = ({
       {/* Queue Panel */}
       {queueOpen && (
         <div
-          className="fixed z-50 w-80 max-h-96 opacity-95 bg-gray-900 border border-gray-700 rounded-lg shadow-lg overflow-y-auto flex flex-col"
+          ref={queueRef}
+          className={`fixed z-50 w-80 max-h-96 bg-gray-900 border border-gray-700 rounded-lg shadow-lg overflow-y-auto flex flex-col transition-all duration-300 ${
+            queueOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}
           style={{
             right: '2rem',
-            bottom: '5rem', // Adjust this value to sit just above the Queue button
+            bottom: '5rem',
+            opacity: queueOpen ? 1 : 0,
+            pointerEvents: queueOpen ? 'auto' : 'none',
+            transform: queueOpen ? 'translateY(0)' : 'translateY(40px)',
           }}
         >
           <div className="p-3 border-b border-gray-700 flex justify-between items-center">
@@ -283,10 +302,7 @@ const Player = ({
                     className={`p-3 cursor-pointer hover:bg-gray-800 text-gray-300`}
                     onClick={() => handleQueueSongClick(song)}
                   >
-                    {song.song_name}{" "}
-                    {/* <span className="text-xs text-gray-500">
-                      by {song.artist}
-                    </span> */}
+                    {song.song_name}
                   </div>
                 ))}
                 {currentMusic && (
@@ -294,10 +310,7 @@ const Player = ({
                     className="p-3 bg-red-600 bg-opacity-25 text-white font-bold rounded"
                     style={{ margin: "2px 0" }}
                   >
-                    {currentMusic.song_name}{" "}
-                    {/* <span className="text-xs text-gray-200">
-                      by {currentMusic.artist}
-                    </span> */}
+                    {currentMusic.song_name}
                     <span className="ml-2 text-xs bg-red-900 px-2 py-0.5 rounded">
                       Now Playing
                     </span>
@@ -309,10 +322,7 @@ const Player = ({
                     className={`p-3 cursor-pointer hover:bg-gray-800 text-gray-300`}
                     onClick={() => handleQueueSongClick(song)}
                   >
-                    {song.song_name}{" "}
-                    {/* <span className="text-xs text-gray-500">
-                      by {song.artist}
-                    </span> */}
+                    {song.song_name}
                   </div>
                 ))}
               </>

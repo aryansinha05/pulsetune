@@ -11,8 +11,7 @@ const AllArtists = () => {
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/ffghjkl;'
-          etchdata`, {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/fetchdata`, {
           withCredentials: true,
         });
         const data = res.data;
@@ -62,28 +61,24 @@ const AllArtists = () => {
   }
 
   return (
-    <div className="p-8">
-      <h2 className="text-3xl font-bold mb-6 text-white">Artists</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+    <div className="p-4 sm:p-8">
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-white">Artists</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-8">
         {artists.map((artist, idx) => (
-          <div key={artist.name + idx} className="bg-gray-900 rounded-xl shadow-lg p-5 flex flex-col items-center">
+          <Link
+            key={artist.name + idx}
+            to={`/artists/${encodeURIComponent(artist.name)}`}
+            className="bg-gray-900 rounded-xl shadow-lg p-2 sm:p-5 flex flex-col items-center transition hover:scale-105 hover:bg-gray-800 focus:outline-none"
+          >
             <img
               src={artist.coverImage}
               alt={artist.name}
-              className="w-32 h-32 object-cover rounded-full mb-4 border-4 border-gray-700"
+              className="w-16 h-16 sm:w-32 sm:h-32 object-cover rounded-full mb-2 sm:mb-4 border-2 sm:border-4 border-gray-700"
               onError={e => { e.target.src = ""; }}
             />
-            <h3 className="text-xl font-semibold text-white mb-2">{artist.name}</h3>
-            <p className="text-gray-400 text-center mb-2">Songs: {artist.songs.length}</p>
-            <Link
-              to={`/artists/${encodeURIComponent(artist.name)}`}
-              className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-            >
-              <FontAwesomeIcon icon={faEye} className='mr-1' />
-              <span className="hidden sm:inline">Artist</span>
-              <span className="hidden sm:inline">`${process.env.REACT_APP_API_URL}`</span>
-            </Link>
-          </div>
+            <h3 className="text-base sm:text-xl font-semibold text-white mb-1 sm:mb-2 truncate w-full text-center">{artist.name}</h3>
+            <p className="text-gray-400 text-center mb-1 sm:mb-2 text-xs sm:text-base">Songs: {artist.songs.length}</p>
+          </Link>
         ))}
       </div>
     </div>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const PlaylistCard = ({ playlist, setUser }) => {
   const handleDelete = async () => {
@@ -28,36 +28,31 @@ const PlaylistCard = ({ playlist, setUser }) => {
     : "No song in playlist";
 
   return (
-    <div className="bg-gray-900 rounded-xl shadow-lg p-5 flex flex-col items-center">
+    <Link
+      to={`/playlist/${playlist._id}`}
+      className="bg-gray-900 rounded-xl shadow-lg p-2 sm:p-5 flex flex-col items-center transition hover:scale-105 hover:bg-gray-800 focus:outline-none"
+      title="View Playlist"
+      style={{ minHeight: 'auto', height: 'auto' }}
+    >
       <img
         src={coverImage}
         alt={altText}
-        className="w-32 h-32 object-cover rounded-full mb-4 border-4 border-gray-700"
+        className="w-14 h-14 sm:w-24 sm:h-24 object-cover rounded-full mb-1 sm:mb-3 border-2 sm:border-4 border-gray-700"
         onError={e => { e.target.src = ""; }}
       />
-      <h3 className="text-xl font-semibold text-white mb-2">
+      <h3 className="text-base sm:text-lg font-semibold text-white mb-0.5 sm:mb-1 truncate w-full text-center">
         {playlist.name.charAt(0).toUpperCase() + playlist.name.slice(1)}
       </h3>
-      <p className="text-gray-400 text-center mb-2">Songs: {playlist.list.length}</p>
-      <div className="flex gap-2 mb-2">
-        <Link
-          to={`/playlist/${playlist._id}`}
-          className="flex items-center gap-1 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm"
-          title="View Playlist"
-        >
-          <FontAwesomeIcon icon={faEye} />
-          <span className="hidden sm:inline">Playlist</span>
-        </Link>
-        <button
-          onClick={handleDelete}
-          className="flex items-center gap-1 px-3 py-2 bg-red-700 text-white rounded hover:bg-red-800 transition text-sm"
-          title="Delete Playlist"
-        >
-          <FontAwesomeIcon icon={faTrash} />
-          <span className="hidden sm:inline"></span>
-        </button>
-      </div>
-    </div>
+      <p className="text-gray-400 text-center mb-1 text-xs sm:text-base">Songs: {playlist.list.length}</p>
+      <button
+        onClick={e => { e.preventDefault(); handleDelete(); }}
+        className="flex items-center gap-1 px-2 py-1 bg-red-700 text-white rounded hover:bg-red-800 transition text-xs sm:text-sm mt-0.5"
+        title="Delete Playlist"
+      >
+        <FontAwesomeIcon icon={faTrash} />
+        <span className="hidden sm:inline">Delete</span>
+      </button>
+    </Link>
   );
 };
 
