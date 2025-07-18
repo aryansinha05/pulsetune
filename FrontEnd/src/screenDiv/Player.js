@@ -2,7 +2,7 @@ import {
   faCirclePause,
   faCirclePlay,
 } from "@fortawesome/free-regular-svg-icons";
-import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesLeft, faAnglesRight, faList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState, useCallback } from "react";
 
@@ -18,6 +18,7 @@ const Player = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isSeeking, setIsSeeking] = useState(false);
+  const [queueOpen, setQueueOpen] = useState(false);
   const audioRef = useRef(null);
 
   const handleClick = () => {
@@ -60,6 +61,25 @@ const Player = ({
       audioRef.current.currentTime = currentTime;
     }
     setIsSeeking(false);
+  };
+
+  const handleQueueSongClick = (song) => {
+    // Find the index of the clicked song in the full queue
+    const fullQueue = [...preQueue, currentMusic, ...postQueue];
+    const idx = fullQueue.findIndex((s) => s._id === song._id);
+
+    if (idx === -1) return; // Not found, do nothing
+
+    // New preQueue: all songs before the clicked song
+    const newPreQueue = fullQueue.slice(0, idx);
+    // New currentMusic: the clicked song
+    const newCurrentMusic = fullQueue[idx];
+    // New postQueue: all songs after the clicked song
+    const newPostQueue = fullQueue.slice(idx + 1);
+
+    setPreQueue(newPreQueue);
+    setCurrentMusic(newCurrentMusic);
+    setPostQueue(newPostQueue);
   };
 
   useEffect(() => {
@@ -223,9 +243,92 @@ const Player = ({
         </div>
 
         <div className="hidden xl:flex xl:w-[30vw] justify-center items-center">
-          Features
+          <button
+            className="relative px-4 py-2 bg-gray-800 rounded-xl hover:bg-gray-700 transition"
+            onClick={() => setQueueOpen((prev) => !prev)}
+          >
+             <FontAwesomeIcon icon={faList} className="mr-1.5" />
+            Queue
+          </button>
         </div>
       </div>
+
+      {/* Queue Panel */}
+      {queueOpen && (
+        <div
+          className="fixed z-50 w-80 max-h-96 opacity-95 bg-gray-900 border border-gray-700 rounded-lg shadow-lg overflow-y-auto flex flex-col"
+          style={{
+            right: '2rem',
+            bottom: '5rem', // Adjust this value to sit just above the Queue button
+          }}
+        >
+          <div className="p-3 border-b border-gray-700 flex justify-between items-center">
+            <span className="text-lg font-semibold text-white">Queue</span>
+            <button
+              className="text-gray-400 hover:text-white"
+              onClick={() => setQueueOpen(false)}
+              aria-label="Close queue"
+            >
+              &times;
+            </button>
+          </div>
+          <div className="flex-1 overflow-y-auto">
+            {postQueue.length === 0 && preQueue.length === 0 && !currentMusic ? (
+              <div className="p-4 text-gray-400">Queue is empty.</div>
+            ) : (
+              <>
+                {preQueue.map((song) => (
+                  <div
+                    key={song._id}
+                    className={`p-3 cursor-pointer hover:bg-gray-800 text-gray-300`}
+                    onClick={() => handleQueueSongClick(song)}
+                  >
+                    {song.song_name}{" "}
+                    {/* <span className="text-xs text-gray-500">
+                      by {song.artist}
+                    </span> */}
+                  </div>
+                ))}
+                {currentMusic && (
+                  <div
+                    className="p-3 bg-red-600 bg-opacity-25 text-white font-bold rounded"
+                    style={{ margin: "2px 0" }}
+                  >
+                    {currentMusic.song_name}{" "}
+                    {/* <span className="text-xs text-gray-200">
+                      by {currentMusic.artist}
+                    </span> */}
+                    <span className="ml-2 text-xs bg-red-900 px-2 py-0.5 rounded">
+                      Now Playing
+                    </span>
+                  </div>
+                )}
+                {postQueue.map((song) => (
+                  <div
+                    key={song._id}
+                    className={`p-3 cursor-pointer hover:bg-gray-800 text-gray-300`}
+                    onClick={() => handleQueueSongClick(song)}
+                  >
+                    {song.song_name}{" "}
+                    {/* <span className="text-xs text-gray-500">
+                      by {song.artist}
+                    </span> */}
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Queue Button */}
+      <button
+        className="h-9 w-11 fixed bottom-20 opacity-75 outline-none right-4 z-50 px- py- bg-gray-800 rounded-full shadow-lg xl:hidden flex items-center justify-center"
+        onClick={() => setQueueOpen((prev) => !prev)}
+        aria-label="Show Queue"
+      >
+        <FontAwesomeIcon icon={faList} className="text-lg" />
+      </button>
     </div>
   );
 };
