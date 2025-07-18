@@ -23,6 +23,20 @@ const Sidebar = ({ user, setMusics }) => {
           Genres
         </div> */}
       {/* </div> */}
+      {
+        user==null && (<>
+        <div className=" mb-4 border-gray-800 px-4">
+  <h1 className="font-bold mb-2 text-white text-lg">🎧 Welcome</h1>
+  <div className="bg-gray-800/40 p-4 rounded-md text-sm text-gray-300 leading-6">
+    Sign up or log in to start exploring music, creating playlists, and discovering artists you love.
+    <p className="mt-3 italic text-gray-400">
+      New here? Click <span className="text-white font-semibold">SignUp</span> in the top right to begin.
+    </p>
+  </div>
+</div>
+
+</>)
+      }
       {user && (
         <>
           <div>
