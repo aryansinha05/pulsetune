@@ -22,7 +22,7 @@ const PlaylistsSidebar = ({ user, setMusics }) => {
             <PlaylistItems key={playlist._id} playlist={playlist} setMusics={setMusics} />
           ))
         ) : (
-          <div>No playlists available.</div>
+          <div className='ml-2'>No playlists found!</div>
         )}
       </div>
     </div>

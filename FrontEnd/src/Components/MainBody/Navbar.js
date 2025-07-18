@@ -77,9 +77,6 @@ const Navbar = ({
         <Link to="/artists" className="m-5">
           ARTISTS
         </Link>
-        <Link to="/" className="m-5">
-          LIVE
-        </Link>
       </div>
       {user != null ? (
         <div className="h-10 w-full xl:w-[35vw] mx-5 flex items-center justify-center rounded-md gap-2 px-3 bg-gray-800 hover:bg-gray-700 xl:focus-within:w-[50vw] border-[1px] border-gray-700 transition-all duration-500">

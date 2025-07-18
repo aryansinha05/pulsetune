@@ -43,16 +43,16 @@ const MobileSidebar = ({ open, setOpen, user, setMusics }) => {
           {/* <h1 className="font-bold pl-2 mb-2">MENU</h1> */}
           <div className="p-3 origin-left hover:scale-x-105 hover:bg-gray-800 w-full transition-all duration-300 flex items-center gap-2 hover:cursor-pointer">
             <FontAwesomeIcon icon={faWpexplorer} className="mx-4" />
-            Explore
+            <Link to="/">Music</Link>
           </div>
           <div className="p-3 origin-left hover:scale-x-105 hover:bg-gray-800 w-full transition-all duration-300 flex items-center gap-2 hover:cursor-pointer">
             <FontAwesomeIcon icon={faCompactDisc} className="mx-4" />
-            Albums
+            <Link to="/artists">Artists</Link>
           </div>
-          <div className="p-3 origin-left hover:scale-x-105 hover:bg-gray-800 w-full transition-all duration-300 flex items-center gap-2 hover:cursor-pointer">
+          {/* <div className="p-3 origin-left hover:scale-x-105 hover:bg-gray-800 w-full transition-all duration-300 flex items-center gap-2 hover:cursor-pointer">
             <FontAwesomeIcon icon={faSlack} className="mx-4" />
             Genres
-          </div>
+          </div> */}
         </div>
         {/* Playlist section */}
         {user && (
